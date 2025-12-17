@@ -30,11 +30,23 @@ function App() {
     fetchMoods();
   };
 
+  // UPDATE mood
+  const updateMood = async (id, mood, note) => {
+    await axios.put(`${API_URL}/${id}`, { mood, note });
+    fetchMoods();
+  };
+
   return (
     <div>
       <h1>Mood Tracker</h1>
+
       <MoodForm addMood={addMood} />
-      <MoodList moods={moods} deleteMood={deleteMood} />
+
+      <MoodList
+        moods={moods}
+        deleteMood={deleteMood}
+        updateMood={updateMood}
+      />
     </div>
   );
 }

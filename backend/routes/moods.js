@@ -33,6 +33,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+// UPDATE a mood
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { mood, note } = req.body;
+
+    const result = await pool.query(
+      "UPDATE moods SET mood=$1, note=$2 WHERE id=$3 RETURNING *",
+      [mood, note, id]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 // DELETE a mood
 router.delete("/:id", async (req, res) => {
   try {
