@@ -3,7 +3,7 @@ import axios from "axios";
 import MoodForm from "./MoodForm";
 import MoodList from "./MoodList";
 
-const API_URL = "http://localhost:4000/api/moods";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [moods, setMoods] = useState([]);
