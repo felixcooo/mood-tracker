@@ -3,7 +3,7 @@ import axios from "axios";
 import MoodForm from "./MoodForm";
 import MoodList from "./MoodList";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "http://localhost:4000/api/moods";
 
 function App() {
   const [moods, setMoods] = useState([]);
@@ -14,7 +14,9 @@ function App() {
   }, []);
 
   const fetchMoods = async () => {
+    console.log("FETCHING FROM:", API_URL);
     const res = await axios.get(API_URL);
+    console.log("RESPONSE:", res.data);
     setMoods(res.data);
   };
 

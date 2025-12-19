@@ -1,52 +1,21 @@
-import { useState } from "react";
-
-export default function MoodList({ moods, deleteMood, updateMood }) {
-  const [editingId, setEditingId] = useState(null);
-  const [editMood, setEditMood] = useState("");
-  const [editNote, setEditNote] = useState("");
-
-  const startEdit = (m) => {
-    setEditingId(m.id);
-    setEditMood(m.mood);
-    setEditNote(m.note || "");
-  };
-
-  const saveEdit = () => {
-    updateMood(editingId, editMood, editNote);
-    setEditingId(null);
-  };
-
+export default function MoodList({ moods, deleteMood }) {
   return (
-    <ul>
-      {moods.map((m) => (
-        <li key={m.id}>
-          {editingId === m.id ? (
-            <>
-              <select
-                value={editMood}
-                onChange={(e) => setEditMood(e.target.value)}
-              >
-                <option value="happy">😀 Happy</option>
-                <option value="okay">🙂 Okay</option>
-                <option value="sad">😢 Sad</option>
-              </select>
+    <div>
+      <h2>Moods</h2>
 
-              <input
-                value={editNote}
-                onChange={(e) => setEditNote(e.target.value)}
-              />
+      {moods.length === 0 && <p>No moods yet.</p>}
 
-              <button onClick={saveEdit}>Save</button>
-            </>
-          ) : (
-            <>
-              {m.mood} — {m.note}
-              <button onClick={() => startEdit(m)}>Edit</button>
-              <button onClick={() => deleteMood(m.id)}>Delete</button>
-            </>
-          )}
-        </li>
-      ))}
-    </ul>
+      <ul>
+        {moods.map((m) => (
+          <li key={m.id}>
+            <strong>{m.mood}</strong> — {m.note}
+
+            <button onClick={() => deleteMood(m.id)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
